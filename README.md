@@ -30,3 +30,16 @@ Instead of passing the authentication middleware through `app.use` as in the pre
 When we define a path, i.e. [`app.get`](https://expressjs.com/en/5x/api.html#ap) , we pass in a `path` **and** we can *optionally* pass **multiple** callback functions. 
 These callback functions will behave just like middleware.
 
+```Javascript
+const verifyPassword = (req, res, next) => {
+    const { password } = req.query;
+    if(password === 'chickennugget'){
+        next();
+    }
+    res.send('Sorry, you need a password')
+}
+
+app.get('/secret', verifyPassword, (req, res) => {
+    res.send('My secret is: Sometimes I wear headphones in public')
+})
+```
